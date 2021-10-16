@@ -1,0 +1,12 @@
+The .onion operator never needs your private key file or the data it contains.
+Handing over this data is a security risk.
+If you want to reuse an existing file for another onion service (not recommended), follow these steps:
+
+- Import your private key file
+- Change the file name box
+- Edit the onion name text box with the new name and confirm the changes
+- Save the private key file with the new name.
+- Copy the *server side* value and send to the .onion operator
+
+It's generally better to create a new key file for each onion service you want to access.
+Using the same file for multiple services allows those operators to know that you're the same person.

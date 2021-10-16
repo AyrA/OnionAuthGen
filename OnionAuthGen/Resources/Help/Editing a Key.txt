@@ -1,0 +1,11 @@
+You can edit the onion name of a key. This is useful if the .onion name of a service changed.
+
+1. Import the key you want to change
+2. Put a new name into the onion name box
+3. Confirm the prompt
+4. Save the client key.
+
+If you no longer need the old onion name, you can overwrite the existing key, otherwise use a new file name.
+
+Note: You can also use this to quickly duplicate your key to use it for a different onion service.
+In general, this is not recommended though.

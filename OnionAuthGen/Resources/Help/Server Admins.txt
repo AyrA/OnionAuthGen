@@ -1,0 +1,14 @@
+As a server administrator, you can use this tool to generate keys for your users.
+
+Note that this is not an ideal process.
+For better security, the user should generate the keys and send you the public key part.
+As a .onion operator you ideally would never see the private key.
+
+To use this as a server operator:
+
+1. Generate a new key pair
+2. Save the server side part into your onion service directory
+3. Restart Tor
+4. Send the client side string to the client.
+
+Note: Do not send the client side part over an insecure channel.

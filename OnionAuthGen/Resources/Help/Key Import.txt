@@ -1,0 +1,4 @@
+The key import allows you to import a client key and regenerate the matching server key.
+A key import will automatically fill out all fields.
+
+Note: You cannot import server keys, only client keys.

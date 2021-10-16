@@ -1,0 +1,9 @@
+This application can be used to generate brand new keys.
+
+Be careful when using this function multiple times.
+The application won't keep a history of generated keys. Any key generated but not saved is lost.
+
+Note: You only need to save the client side of the key.
+The server side will be automatically regenerated when importing a client key.
+This does not work the other way! You can recreate the server key from the client key,
+but not the client key from the server key.

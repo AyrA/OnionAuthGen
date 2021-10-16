@@ -1,0 +1,32 @@
+A key consists of a public and a private part.
+To not confuse users too much, these are referred as server key and client key in this application.
+
+Server key
+==========
+The server key is held by the .onion operator.
+It's not considered secret information and it's generally not a problem if someone manages to steal the key
+because they can't pretend to be the client with this key.
+However, you may still want to consider sending the server admin a new key if this happens.
+
+Client key
+==========
+The client key is held by the .onion visitor.
+You never want to share this key with anybody. Anyone who gets his hands on the key can pretend to be you.
+You should generally be suspicious if the server admin gives you a key to access a .onion site.
+It should be the other way where you generate a key and hand over the server part to the server admin.
+
+Because this key is sensitive, the client configuration is not shown by default,
+but an option is provided to unmask the text box and show the configuration line.
+
+Tor configuration
+==========
+If you use a manual Tor installation, you need to configure it to handle your client keys.
+Once you save a client key, the matching configuration line is show below the client key line.
+You simply add this line to your tor configuration and restart Tor.
+Note: Tor will only scan for keys when it starts. If you add/modify/delete keys you need to restart Tor for the changes to apply.
+
+Tor Browser
+==========
+Tor browser doesn't requires any configuration.
+If you visit a protected .onion site, you will be prompted to enter your client key.
+Simply click the "Copy key" button and paste the key into the Tor browser dialog.
