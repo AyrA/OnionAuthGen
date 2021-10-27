@@ -65,8 +65,10 @@ namespace OnionAuthGen
             this.ClientSize = new System.Drawing.Size(592, 173);
             this.Controls.Add(this.TbHelp);
             this.Controls.Add(this.LbHelp);
+            this.KeyPreview = true;
             this.Name = "FrmHelp";
             this.Text = ".onion Authentication Generator Help";
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmHelp_KeyDown);
             this.ResumeLayout(false);
             this.PerformLayout();
 
