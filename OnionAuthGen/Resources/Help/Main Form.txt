@@ -1,4 +1,0 @@
-﻿The main form provides you with all operations necessary to create, import and edit keys.
-It can be used by .onion name administrators as well as regular Tor users.
-
-← Select a chapter from the list to your left to get further help.

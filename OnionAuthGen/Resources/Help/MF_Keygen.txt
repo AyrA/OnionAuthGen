@@ -1,0 +1,10 @@
+﻿Main Form: Key Generator
+
+The main form provides you with all operations necessary to create, import and edit keys.
+It can be used by .onion name administrators as well as regular Tor users.
+Key handling options are contained in the File Menu.
+
+You can also manage private and public keys easily with this application.
+Different tabs are provided for these features.
+
+← Select a chapter from the list to your left to get further help.
