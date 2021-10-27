@@ -39,20 +39,35 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base32.cs" />
-    <Compile Include="FrmHelp.cs">
+    <Compile Include="UI\FrmHelp.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmHelp.Designer.cs">
+    <Compile Include="UI\FrmHelp.Designer.cs">
       <DependentUpon>FrmHelp.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmMain.cs">
+    <Compile Include="UI\FrmInput.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmMain.Designer.cs">
+    <Compile Include="UI\FrmInput.Designer.cs">
+      <DependentUpon>FrmInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FrmMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\FrmMain.MainEvents.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FrmMain.PrivateKeyManager.cs">
+      <DependentUpon>FrmMain.cs</DependentUpon>
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="OnionGenerator.cs" />
     <Compile Include="Program.cs" />
@@ -60,10 +75,13 @@
     <Compile Include="Tools.cs" />
     <Compile Include="X25519\Internal.cs" />
     <Compile Include="X25519\X25519.cs" />
-    <EmbeddedResource Include="FrmHelp.resx">
+    <EmbeddedResource Include="UI\FrmHelp.resx">
       <DependentUpon>FrmHelp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmMain.resx">
+    <EmbeddedResource Include="UI\FrmInput.resx">
+      <DependentUpon>FrmInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">

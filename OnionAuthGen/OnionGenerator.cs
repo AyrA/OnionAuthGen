@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using X25519;
 
 namespace OnionAuthGen
@@ -51,6 +52,11 @@ namespace OnionAuthGen
                 return false;
             }
             return true;
+        }
+
+        public static Regex GetValidationExpression()
+        {
+            return new Regex("^([a-z2-7]{56})(?:\\.onion)?$", RegexOptions.IgnoreCase);
         }
 
         /// <summary>
@@ -156,6 +162,25 @@ namespace OnionAuthGen
         }
 
         /// <summary>
+        /// Normalizes an onion name into lowercase without the .onion extension.
+        /// </summary>
+        /// <param name="value">onion domain</param>
+        /// <returns>normalized onion value</returns>
+        public static string NormalizeOnion(string value)
+        {
+            if (!IsOnionName(value))
+            {
+                throw new ArgumentException("value is not an onion name");
+            }
+            value = value.ToLower();
+            if (value.EndsWith(".onion"))
+            {
+                value = value.Substring(0, value.Length - 6);
+            }
+            return value;
+        }
+
+        /// <summary>
         /// Generates fully popuulated <see cref="OnionDetails"/> from <paramref name="ClientLine"/>
         /// </summary>
         /// <param name="ClientLine">Client private key file line</param>
@@ -190,7 +215,7 @@ namespace OnionAuthGen
                 Ret.Client = ClientLine;
                 Ret.Server = GenerateServerLine(Ret.RawKeys.PublicKey, AT, KT);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new FormatException(nameof(ClientLine) + " invalid. Invalid key: " + Segments[3], ex);
             }
@@ -237,5 +262,38 @@ namespace OnionAuthGen
         /// Client side line
         /// </summary>
         public string Client { get; set; }
+        /// <summary>
+        /// Gets or sets the .onion name
+        /// </summary>
+        /// <remarks>Setting this property will adjust the <see cref="Client"/> property accordingly</remarks>
+        public string Onion
+        {
+            get
+            {
+                if (Client == null)
+                {
+                    return null;
+                }
+                return OnionGenerator.NormalizeOnion(Client.Split(':')[0].ToLower());
+            }
+            set
+            {
+                if (Client == null)
+                {
+                    throw new InvalidOperationException("Client key not set");
+                }
+                if (!OnionGenerator.IsOnionName(value))
+                {
+                    throw new ArgumentException("value must be valid onion name");
+                }
+                var parts = Client.Split(':');
+                if (parts.Length != 4)
+                {
+                    throw new InvalidOperationException("Client key is invalid");
+                }
+                parts[0] = OnionGenerator.NormalizeOnion(value);
+                Client = string.Join(":", parts);
+            }
+        }
     }
 }
