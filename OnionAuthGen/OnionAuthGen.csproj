@@ -67,6 +67,7 @@
     <Compile Include="Tools.cs" />
     <Compile Include="X25519\Internal.cs" />
     <Compile Include="X25519\X25519.cs" />
+    <EmbeddedResource Include="Resources\Help\MF_PrivateKeys.txt" />
     <EmbeddedResource Include="UI\FrmHelp.resx">
       <DependentUpon>FrmHelp.cs</DependentUpon>
     </EmbeddedResource>
@@ -109,7 +110,9 @@
     <EmbeddedResource Include="Resources\Help\Keys.txt" />
     <EmbeddedResource Include="Resources\Help\Editing a Key.txt" />
     <EmbeddedResource Include="Resources\Help\MF_Keygen.txt" />
-    <EmbeddedResource Include="Resources\Help\MF_PrivateKeys.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Help\MF_PublicKeys.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

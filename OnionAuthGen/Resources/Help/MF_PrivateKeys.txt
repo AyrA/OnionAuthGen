@@ -7,4 +7,5 @@ Use the context menu to perform various actions, including:
 - Changing the .onion domain
 - Copying the private key configuration or just the key itself
 - Copying the public key configuration or just the key itself
+- Enable/Disable keys
 - Deleting keys

@@ -480,7 +480,7 @@ namespace OnionAuthGen
                 Directory.CreateDirectory(TbPrivateDirectory.Text = ClientAuthBaseDir);
                 Dir = TbPrivateDirectory.Text;
             }
-            foreach (var F in GetKeyFiles(Dir))
+            foreach (var F in GetPrivateKeyFiles(Dir))
             {
                 var Enabled = Path.GetExtension(F).ToLower() == OnionGenerator.CLIENT_FILE_EXT;
                 try
@@ -503,8 +503,8 @@ namespace OnionAuthGen
 
                 }
             }
-            //Use header size if list is empty
-            LvPrivateKeys.AutoResizeColumns(LvPrivateKeys.Items.Count == 0 ? ColumnHeaderAutoResizeStyle.HeaderSize : ColumnHeaderAutoResizeStyle.ColumnContent);
+            //Using header size actually takes visible rows into account too despite the name
+            LvPrivateKeys.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             LvPrivateKeys.ResumeLayout();
             if (!PrivateDuplicateConflictMessageShown && Names.Count != Names.Distinct().Count())
             {
@@ -514,7 +514,7 @@ namespace OnionAuthGen
             }
         }
 
-        private string[] GetKeyFiles(string Dir, bool NameOnly = false)
+        private string[] GetPrivateKeyFiles(string Dir, bool NameOnly = false)
         {
             var Ret = new List<string>();
             foreach (var F in Directory.GetFiles(Dir))
@@ -527,7 +527,7 @@ namespace OnionAuthGen
             return Ret.ToArray();
         }
 
-        private PrivateKeyListEntry GetSelectedRow()
+        private PrivateKeyListEntry GetSelectedPrivateRow()
         {
             if (LvPrivateKeys.SelectedItems.Count > 0)
             {
@@ -546,7 +546,7 @@ namespace OnionAuthGen
             return null;
         }
 
-        private bool ShowRowSelectInfoDialog(PrivateKeyListEntry Row)
+        private bool ShowPrivateRowSelectInfoDialog(PrivateKeyListEntry Row)
         {
             if (Row == null)
             {
@@ -585,8 +585,8 @@ namespace OnionAuthGen
 
         private void CmsPrivateRename_Click(object sender, EventArgs e)
         {
-            var Row = GetSelectedRow();
-            if (!ShowRowSelectInfoDialog(Row))
+            var Row = GetSelectedPrivateRow();
+            if (!ShowPrivateRowSelectInfoDialog(Row))
             {
                 return;
             }
@@ -615,8 +615,8 @@ namespace OnionAuthGen
 
         private void CmsPrivateChangeOnion_Click(object sender, EventArgs e)
         {
-            var Row = GetSelectedRow();
-            if (!ShowRowSelectInfoDialog(Row))
+            var Row = GetSelectedPrivateRow();
+            if (!ShowPrivateRowSelectInfoDialog(Row))
             {
                 return;
             }
@@ -647,8 +647,8 @@ namespace OnionAuthGen
 
         private void CmsPrivateDuplicate_Click(object sender, EventArgs e)
         {
-            var Row = GetSelectedRow();
-            if (!ShowRowSelectInfoDialog(Row))
+            var Row = GetSelectedPrivateRow();
+            if (!ShowPrivateRowSelectInfoDialog(Row))
             {
                 return;
             }
@@ -677,8 +677,8 @@ namespace OnionAuthGen
 
         private void CmsPrivateEnable_Click(object sender, EventArgs e)
         {
-            var Row = GetSelectedRow();
-            if (!ShowRowSelectInfoDialog(Row))
+            var Row = GetSelectedPrivateRow();
+            if (!ShowPrivateRowSelectInfoDialog(Row))
             {
                 return;
             }
@@ -704,8 +704,8 @@ namespace OnionAuthGen
 
         private void CmsPrivateDelete_Click(object sender, EventArgs e)
         {
-            var Row = GetSelectedRow();
-            if (!ShowRowSelectInfoDialog(Row))
+            var Row = GetSelectedPrivateRow();
+            if (!ShowPrivateRowSelectInfoDialog(Row))
             {
                 return;
             }
@@ -726,8 +726,8 @@ namespace OnionAuthGen
 
         private void CmsPrivateCopyPrivateKey_Click(object sender, EventArgs e)
         {
-            var Row = GetSelectedRow();
-            if (!ShowRowSelectInfoDialog(Row))
+            var Row = GetSelectedPrivateRow();
+            if (!ShowPrivateRowSelectInfoDialog(Row))
             {
                 return;
             }
@@ -744,8 +744,8 @@ namespace OnionAuthGen
 
         private void CmsPrivateCopyPrivateLine_Click(object sender, EventArgs e)
         {
-            var Row = GetSelectedRow();
-            if (!ShowRowSelectInfoDialog(Row))
+            var Row = GetSelectedPrivateRow();
+            if (!ShowPrivateRowSelectInfoDialog(Row))
             {
                 return;
             }
@@ -762,8 +762,8 @@ namespace OnionAuthGen
 
         private void CmsPrivateCopyPublicKey_Click(object sender, EventArgs e)
         {
-            var Row = GetSelectedRow();
-            if (!ShowRowSelectInfoDialog(Row))
+            var Row = GetSelectedPrivateRow();
+            if (!ShowPrivateRowSelectInfoDialog(Row))
             {
                 return;
             }
@@ -780,8 +780,8 @@ namespace OnionAuthGen
 
         private void CmsPrivateCopyPublicLine_Click(object sender, EventArgs e)
         {
-            var Row = GetSelectedRow();
-            if (!ShowRowSelectInfoDialog(Row))
+            var Row = GetSelectedPrivateRow();
+            if (!ShowPrivateRowSelectInfoDialog(Row))
             {
                 return;
             }
@@ -812,9 +812,197 @@ namespace OnionAuthGen
 
         #region Public Key Manager
 
-        //TODO
+        private static readonly string[] publicKeyExt = new string[]
+        {
+            OnionGenerator.SERVER_FILE_EXT,
+            ".auth_disabled"
+        };
+
+        private bool PublicDuplicateConflictMessageShown = false;
+
+        private IEnumerable<string> GetPublicKeyFiles(string Dir)
+        {
+            foreach (var F in Directory.GetFiles(Dir))
+            {
+                if (publicKeyExt.Contains(Path.GetExtension(F).ToLower()))
+                {
+                    yield return F;
+                }
+            }
+        }
+
+        private void ReloadPublicKeys()
+        {
+            LvPublicKeys.SuspendLayout();
+            LvPublicKeys.Items.Clear();
+            if (!string.IsNullOrEmpty(TbPublicDirectory.Text))
+            {
+                var Dir = TbPublicDirectory.Text;
+                var Names = new List<string>();
+                foreach (var F in GetPublicKeyFiles(Dir))
+                {
+                    var Enabled = Path.GetExtension(F).ToLower() == OnionGenerator.SERVER_FILE_EXT;
+                    try
+                    {
+                        var Line = File.ReadAllLines(F)[0].Split(':');
+                        if (Line.Length == 3)
+                        {
+                            var Item = LvPublicKeys.Items.Add(Path.GetFileNameWithoutExtension(F));
+                            Names.Add(Item.Text.ToLower());
+                            Item.Tag = F;
+                            Item.SubItems.Add(Line[0]);
+                            Item.SubItems.Add(Line[1]);
+                            Item.SubItems.Add(Enabled ? "Yes" : "No");
+                        }
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                if (!PublicDuplicateConflictMessageShown && Names.Count != Names.Distinct().Count())
+                {
+                    PublicDuplicateConflictMessageShown = true;
+                    Warn("You have public keys with duplicate names that only differ in their enabled state. " +
+                        "You will not be able to enable/disable any of the duplicates until the name of at least one conflicting key is changed.", "Duplicate names");
+                }
+            }
+            //Using header size actually takes visible rows into account too despite the name
+            LvPublicKeys.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
+            LvPublicKeys.ResumeLayout();
+        }
+
+        private string GetSelectedPublicRow()
+        {
+            if (LvPublicKeys.SelectedItems.Count == 1)
+            {
+                return (string)LvPublicKeys.SelectedItems[0].Tag;
+            }
+            return null;
+        }
+
+        private bool ShowPublicRowSelectInfoDialog(string FileName)
+        {
+            if (FileName == null)
+            {
+                Err("Please select an entry first", Text);
+                return false;
+            }
+            try
+            {
+                File.ReadAllText(FileName);
+            }
+            catch
+            {
+                Err("The key cannot be read at this time. File may be gone or in exclusive use.", Text);
+                ReloadPublicKeys();
+                return false;
+            }
+            return true;
+        }
+
+        private void BtnSelectPublicDirectory_Click(object sender, EventArgs e)
+        {
+            if (FBD.ShowDialog() == DialogResult.OK)
+            {
+                TbPublicDirectory.Text = FBD.SelectedPath;
+                ReloadPublicKeys();
+            }
+        }
+
+        private void TbPublicDirectory_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                e.Handled = true;
+                e.SuppressKeyPress = true;
+                if (Directory.Exists(TbPublicDirectory.Text))
+                {
+                    ReloadPublicKeys();
+                }
+                else
+                {
+                    Err("Directory cannot be found or accessed", "Invalid directory");
+                }
+            }
+        }
+
+        private void CmsPublicCopyPublicKey_Click(object sender, EventArgs e)
+        {
+            var Row = GetSelectedPublicRow();
+            if (!ShowPublicRowSelectInfoDialog(Row))
+            {
+                return;
+            }
+            try
+            {
+                Clipboard.Clear();
+                Clipboard.SetText(File.ReadAllText(Row).Split(':').Last().Trim());
+            }
+            catch (Exception ex)
+            {
+                Err($"Cannot copy the selected key. {ex.Message}", "Clipboard access failed");
+            }
+        }
+
+        private void CmsPublicCopyPublicLine_Click(object sender, EventArgs e)
+        {
+            var Row = GetSelectedPublicRow();
+            if (!ShowPublicRowSelectInfoDialog(Row))
+            {
+                return;
+            }
+            try
+            {
+                Clipboard.Clear();
+                Clipboard.SetText(File.ReadAllText(Row).Trim());
+            }
+            catch (Exception ex)
+            {
+                Err($"Cannot copy the selected key. {ex.Message}", "Clipboard access failed");
+            }
+        }
+
+        private void CmsPublicRename_Click(object sender, EventArgs e)
+        {
+            var Row = GetSelectedPublicRow();
+            if (!ShowPublicRowSelectInfoDialog(Row))
+            {
+                return;
+            }
+            var OldName = Path.GetFileNameWithoutExtension(Row);
+            string NewName = AskFileName(OldName);
+            //Exit silently if not renaming
+            if (NewName == OldName || string.IsNullOrEmpty(NewName))
+            {
+                return;
+            }
+            NewName = Path.Combine(Path.GetDirectoryName(Row), NewName + Path.GetExtension(Row));
+            if (File.Exists(NewName))
+            {
+                Err("A key with this name already exists", "Duplicate name");
+            }
+            try
+            {
+                File.Move(Row, NewName);
+                ReloadPublicKeys();
+            }
+            catch (Exception ex)
+            {
+                Err($"Cannot rename key. {ex.Message}", "Key rename failed");
+            }
+        }
+
+        private void CmsPublicEnable_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void CmsPublicDelete_Click(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
         #endregion
-
     }
 }
