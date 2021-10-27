@@ -61,14 +61,6 @@
     <Compile Include="UI\FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
-    <Compile Include="UI\FrmMain.MainEvents.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="UI\FrmMain.PrivateKeyManager.cs">
-      <DependentUpon>FrmMain.cs</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="OnionGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
