@@ -1,3 +1,5 @@
+Editing a Key
+
 You can edit the onion name of a key. This is useful if the .onion name of a service changed.
 
 1. Import the key you want to change

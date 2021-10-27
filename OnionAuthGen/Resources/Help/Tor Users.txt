@@ -1,11 +1,11 @@
-As a Tor user, you can use this tool to generate keys to access a secured .onion service.
+Tor Users
 
+As a Tor user, you can use this tool to generate keys to access a secured .onion service.
 The procedure is really simple:
 
-1. Fill in the .onion name text box
-2. Click "Generate new keypair"
-3. Click the "Save" button next to the client configuration line and save the key to your computer.
-4. Click the "Copy" button next to the server configuration line
+1. Hit CTRL+N or use the appropriate entry in the file menu.
+2. Save the private key
+3. Click the "Copy" button next to the server configuration line
 5. Send the copied line to the .onion administrator.
 
-For more details on how to use your client key, see the "Keys" help.
+For more details on how to use your private key, see the "Keys" help.

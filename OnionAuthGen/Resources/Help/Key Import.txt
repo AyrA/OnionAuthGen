@@ -1,3 +1,5 @@
+Import a Private Key
+
 The key import allows you to import a client key and regenerate the matching server key.
 A key import will automatically fill out all fields.
 

@@ -1,0 +1,10 @@
+﻿Main Form: Private Keys
+
+The private key tab allows you to manage your private keys.
+Use the context menu to perform various actions, including:
+
+- Renaming keys
+- Changing the .onion domain
+- Copying the private key configuration or just the key itself
+- Copying the public key configuration or just the key itself
+- Deleting keys
