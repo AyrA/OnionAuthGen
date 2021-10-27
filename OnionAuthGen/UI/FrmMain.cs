@@ -995,7 +995,29 @@ namespace OnionAuthGen
 
         private void CmsPublicEnable_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var Row = GetSelectedPublicRow();
+            if (!ShowPublicRowSelectInfoDialog(Row))
+            {
+                return;
+            }
+            string NewName;
+            if (Row.ToLower().EndsWith(OnionGenerator.SERVER_FILE_EXT))
+            {
+                NewName = Path.ChangeExtension(Row, ".auth_disabled");
+            }
+            else
+            {
+                NewName = Path.ChangeExtension(Row, OnionGenerator.SERVER_FILE_EXT);
+            }
+            try
+            {
+                File.Move(Row, NewName);
+                ReloadPublicKeys();
+            }
+            catch (Exception ex)
+            {
+                Err($"Cannot change key state. {ex.Message}", "Key state change failed");
+            }
         }
 
         private void CmsPublicDelete_Click(object sender, EventArgs e)
