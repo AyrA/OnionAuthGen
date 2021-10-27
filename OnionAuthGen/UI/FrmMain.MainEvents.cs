@@ -65,6 +65,7 @@ namespace OnionAuthGen
 
         private void FrmMain_HelpRequested(object sender, HelpEventArgs hlpevent)
         {
+            var HelpPages = "MF_Keygen,MF_PrivateKeys,MF_PublicKeys".Split(',');
             var f = Application.OpenForms.OfType<FrmHelp>().FirstOrDefault();
             if (f == null)
             {
@@ -72,7 +73,8 @@ namespace OnionAuthGen
             }
             f.Show();
             f.BringToFront();
-            f.SetHelpArticle("Main Form");
+            var Current = Tabs.TabPages.IndexOf(Tabs.SelectedTab);
+            f.SetHelpArticle(HelpPages[Math.Max(0, Current)]);
         }
 
         private void BtnCopyClientKey_Click(object sender, EventArgs e)

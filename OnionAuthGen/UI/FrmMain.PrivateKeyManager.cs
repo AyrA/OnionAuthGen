@@ -276,7 +276,7 @@ namespace OnionAuthGen
             }
         }
 
-        private void CmsPrivateCopyPrivate_Click(object sender, EventArgs e)
+        private void CmsPrivateCopyPrivateKey_Click(object sender, EventArgs e)
         {
             var Row = GetSelectedRow();
             if (!ShowRowSelectInfoDialog(Row))
@@ -294,7 +294,7 @@ namespace OnionAuthGen
             }
         }
 
-        private void CmsPrivateCopyLine_Click(object sender, EventArgs e)
+        private void CmsPrivateCopyPrivateLine_Click(object sender, EventArgs e)
         {
             var Row = GetSelectedRow();
             if (!ShowRowSelectInfoDialog(Row))
@@ -309,6 +309,42 @@ namespace OnionAuthGen
             catch (Exception ex)
             {
                 Err($"Cannot copy the selected key line. {ex.Message}", "Clipboard access failed");
+            }
+        }
+
+        private void CmsPrivateCopyPublicKey_Click(object sender, EventArgs e)
+        {
+            var Row = GetSelectedRow();
+            if (!ShowRowSelectInfoDialog(Row))
+            {
+                return;
+            }
+            try
+            {
+                Clipboard.Clear();
+                Clipboard.SetText(Row.Details.Server.Split(':').Last());
+            }
+            catch (Exception ex)
+            {
+                Err($"Cannot copy the selected key. {ex.Message}", "Clipboard access failed");
+            }
+        }
+
+        private void CmsPrivateCopyPublicLine_Click(object sender, EventArgs e)
+        {
+            var Row = GetSelectedRow();
+            if (!ShowRowSelectInfoDialog(Row))
+            {
+                return;
+            }
+            try
+            {
+                Clipboard.Clear();
+                Clipboard.SetText(Row.Details.Server);
+            }
+            catch (Exception ex)
+            {
+                Err($"Cannot copy the selected key. {ex.Message}", "Clipboard access failed");
             }
         }
 

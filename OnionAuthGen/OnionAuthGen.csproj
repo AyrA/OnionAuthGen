@@ -110,22 +110,14 @@
     <EmbeddedResource Include="Resources\KeyInfo.txt" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Help\Main Form.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Help\Key Generation.txt" />
     <EmbeddedResource Include="Resources\Help\Key Import.txt" />
     <EmbeddedResource Include="Resources\Help\Server Admins.txt" />
     <EmbeddedResource Include="Resources\Help\Tor Users.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Help\Keys.txt" />
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Resources\Help\Editing a Key.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Resources\Help\MF_PrivateKeys.txt" />
+    <EmbeddedResource Include="Resources\Help\MF_Keygen.txt" />
+    <EmbeddedResource Include="Resources\Help\MF_PrivateKeys.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

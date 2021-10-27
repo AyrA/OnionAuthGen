@@ -67,7 +67,11 @@ namespace OnionAuthGen
             this.CmsPrivate = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.CmsPrivateCopy = new System.Windows.Forms.ToolStripMenuItem();
             this.CmsPrivateCopyPrivate = new System.Windows.Forms.ToolStripMenuItem();
-            this.CmsPrivateCopyLine = new System.Windows.Forms.ToolStripMenuItem();
+            this.CmsPrivateCopyPrivateKey = new System.Windows.Forms.ToolStripMenuItem();
+            this.CmsPrivateCopyPrivateLine = new System.Windows.Forms.ToolStripMenuItem();
+            this.CmsPrivateCopyPublic = new System.Windows.Forms.ToolStripMenuItem();
+            this.CmsPrivateCopyPublicKey = new System.Windows.Forms.ToolStripMenuItem();
+            this.CmsPrivateCopyPublicLine = new System.Windows.Forms.ToolStripMenuItem();
             this.CmsPrivateRename = new System.Windows.Forms.ToolStripMenuItem();
             this.CmsPrivateChangeOnion = new System.Windows.Forms.ToolStripMenuItem();
             this.CmsPrivateDuplicate = new System.Windows.Forms.ToolStripMenuItem();
@@ -416,24 +420,54 @@ namespace OnionAuthGen
             // 
             this.CmsPrivateCopy.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CmsPrivateCopyPrivate,
-            this.CmsPrivateCopyLine});
+            this.CmsPrivateCopyPublic});
             this.CmsPrivateCopy.Name = "CmsPrivateCopy";
             this.CmsPrivateCopy.Size = new System.Drawing.Size(177, 22);
             this.CmsPrivateCopy.Text = "C&opy";
             // 
             // CmsPrivateCopyPrivate
             // 
+            this.CmsPrivateCopyPrivate.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CmsPrivateCopyPrivateKey,
+            this.CmsPrivateCopyPrivateLine});
             this.CmsPrivateCopyPrivate.Name = "CmsPrivateCopyPrivate";
-            this.CmsPrivateCopyPrivate.Size = new System.Drawing.Size(127, 22);
-            this.CmsPrivateCopyPrivate.Text = "&Private key";
-            this.CmsPrivateCopyPrivate.Click += new System.EventHandler(this.CmsPrivateCopyPrivate_Click);
+            this.CmsPrivateCopyPrivate.Size = new System.Drawing.Size(180, 22);
+            this.CmsPrivateCopyPrivate.Text = "&Private";
             // 
-            // CmsPrivateCopyLine
+            // CmsPrivateCopyPrivateKey
             // 
-            this.CmsPrivateCopyLine.Name = "CmsPrivateCopyLine";
-            this.CmsPrivateCopyLine.Size = new System.Drawing.Size(127, 22);
-            this.CmsPrivateCopyLine.Text = "&Entire line";
-            this.CmsPrivateCopyLine.Click += new System.EventHandler(this.CmsPrivateCopyLine_Click);
+            this.CmsPrivateCopyPrivateKey.Name = "CmsPrivateCopyPrivateKey";
+            this.CmsPrivateCopyPrivateKey.Size = new System.Drawing.Size(180, 22);
+            this.CmsPrivateCopyPrivateKey.Text = "&Key only";
+            // 
+            // CmsPrivateCopyPrivateLine
+            // 
+            this.CmsPrivateCopyPrivateLine.Name = "CmsPrivateCopyPrivateLine";
+            this.CmsPrivateCopyPrivateLine.Size = new System.Drawing.Size(180, 22);
+            this.CmsPrivateCopyPrivateLine.Text = "&Entire line";
+            // 
+            // CmsPrivateCopyPublic
+            // 
+            this.CmsPrivateCopyPublic.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CmsPrivateCopyPublicKey,
+            this.CmsPrivateCopyPublicLine});
+            this.CmsPrivateCopyPublic.Name = "CmsPrivateCopyPublic";
+            this.CmsPrivateCopyPublic.Size = new System.Drawing.Size(180, 22);
+            this.CmsPrivateCopyPublic.Text = "&Public";
+            // 
+            // CmsPrivateCopyPublicKey
+            // 
+            this.CmsPrivateCopyPublicKey.Name = "CmsPrivateCopyPublicKey";
+            this.CmsPrivateCopyPublicKey.Size = new System.Drawing.Size(180, 22);
+            this.CmsPrivateCopyPublicKey.Text = "&Key only";
+            this.CmsPrivateCopyPublicKey.Click += new System.EventHandler(this.CmsPrivateCopyPublicKey_Click);
+            // 
+            // CmsPrivateCopyPublicLine
+            // 
+            this.CmsPrivateCopyPublicLine.Name = "CmsPrivateCopyPublicLine";
+            this.CmsPrivateCopyPublicLine.Size = new System.Drawing.Size(180, 22);
+            this.CmsPrivateCopyPublicLine.Text = "&Entire line";
+            this.CmsPrivateCopyPublicLine.Click += new System.EventHandler(this.CmsPrivateCopyPublicLine_Click);
             // 
             // CmsPrivateRename
             // 
@@ -548,7 +582,11 @@ namespace OnionAuthGen
         private System.Windows.Forms.ToolStripMenuItem CmsPrivateDelete;
         private System.Windows.Forms.ToolStripMenuItem CmsPrivateCopy;
         private System.Windows.Forms.ToolStripMenuItem CmsPrivateCopyPrivate;
-        private System.Windows.Forms.ToolStripMenuItem CmsPrivateCopyLine;
+        private System.Windows.Forms.ToolStripMenuItem CmsPrivateCopyPrivateKey;
+        private System.Windows.Forms.ToolStripMenuItem CmsPrivateCopyPrivateLine;
+        private System.Windows.Forms.ToolStripMenuItem CmsPrivateCopyPublic;
+        private System.Windows.Forms.ToolStripMenuItem CmsPrivateCopyPublicKey;
+        private System.Windows.Forms.ToolStripMenuItem CmsPrivateCopyPublicLine;
     }
 }
 
