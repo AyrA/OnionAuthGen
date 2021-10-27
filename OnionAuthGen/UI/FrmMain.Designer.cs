@@ -92,6 +92,7 @@ namespace OnionAuthGen
             this.CmsPublicRename = new System.Windows.Forms.ToolStripMenuItem();
             this.CmsPublicEnable = new System.Windows.Forms.ToolStripMenuItem();
             this.CmsPublicDelete = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.mainMenu.SuspendLayout();
             this.Tabs.SuspendLayout();
             this.TabKeyDetails.SuspendLayout();
@@ -242,7 +243,8 @@ namespace OnionAuthGen
             // mainMenu
             // 
             this.mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.MnuHelp});
             this.mainMenu.Location = new System.Drawing.Point(0, 0);
             this.mainMenu.Name = "mainMenu";
             this.mainMenu.Size = new System.Drawing.Size(592, 24);
@@ -600,7 +602,7 @@ namespace OnionAuthGen
             this.CmsPublicEnable,
             this.CmsPublicDelete});
             this.CmsPublic.Name = "CmsPrivate";
-            this.CmsPublic.Size = new System.Drawing.Size(181, 114);
+            this.CmsPublic.Size = new System.Drawing.Size(148, 92);
             // 
             // toolStripMenuItem1
             // 
@@ -608,43 +610,50 @@ namespace OnionAuthGen
             this.CmsPublicCopyPublicKey,
             this.CmsPublicCopyPublicLine});
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(147, 22);
             this.toolStripMenuItem1.Text = "C&opy";
             // 
             // CmsPublicCopyPublicKey
             // 
             this.CmsPublicCopyPublicKey.Name = "CmsPublicCopyPublicKey";
-            this.CmsPublicCopyPublicKey.Size = new System.Drawing.Size(180, 22);
+            this.CmsPublicCopyPublicKey.Size = new System.Drawing.Size(124, 22);
             this.CmsPublicCopyPublicKey.Text = "&Key";
             this.CmsPublicCopyPublicKey.Click += new System.EventHandler(this.CmsPublicCopyPublicKey_Click);
             // 
             // CmsPublicCopyPublicLine
             // 
             this.CmsPublicCopyPublicLine.Name = "CmsPublicCopyPublicLine";
-            this.CmsPublicCopyPublicLine.Size = new System.Drawing.Size(180, 22);
+            this.CmsPublicCopyPublicLine.Size = new System.Drawing.Size(124, 22);
             this.CmsPublicCopyPublicLine.Text = "&Entire Line";
             this.CmsPublicCopyPublicLine.Click += new System.EventHandler(this.CmsPublicCopyPublicLine_Click);
             // 
             // CmsPublicRename
             // 
             this.CmsPublicRename.Name = "CmsPublicRename";
-            this.CmsPublicRename.Size = new System.Drawing.Size(180, 22);
+            this.CmsPublicRename.Size = new System.Drawing.Size(147, 22);
             this.CmsPublicRename.Text = "&Rename";
             this.CmsPublicRename.Click += new System.EventHandler(this.CmsPublicRename_Click);
             // 
             // CmsPublicEnable
             // 
             this.CmsPublicEnable.Name = "CmsPublicEnable";
-            this.CmsPublicEnable.Size = new System.Drawing.Size(180, 22);
+            this.CmsPublicEnable.Size = new System.Drawing.Size(147, 22);
             this.CmsPublicEnable.Text = "&Enable/Disable";
             this.CmsPublicEnable.Click += new System.EventHandler(this.CmsPublicEnable_Click);
             // 
             // CmsPublicDelete
             // 
             this.CmsPublicDelete.Name = "CmsPublicDelete";
-            this.CmsPublicDelete.Size = new System.Drawing.Size(180, 22);
+            this.CmsPublicDelete.Size = new System.Drawing.Size(147, 22);
             this.CmsPublicDelete.Text = "De&lete";
             this.CmsPublicDelete.Click += new System.EventHandler(this.CmsPublicDelete_Click);
+            // 
+            // MnuHelp
+            // 
+            this.MnuHelp.Name = "MnuHelp";
+            this.MnuHelp.Size = new System.Drawing.Size(41, 20);
+            this.MnuHelp.Text = "&Help";
+            this.MnuHelp.Click += new System.EventHandler(this.MnuHelp_Click);
             // 
             // FrmMain
             // 
@@ -738,6 +747,7 @@ namespace OnionAuthGen
         private System.Windows.Forms.ToolStripMenuItem CmsPublicEnable;
         private System.Windows.Forms.ToolStripMenuItem CmsPublicDelete;
         private System.Windows.Forms.ToolStripMenuItem CmsPublicCopyPublicLine;
+        private System.Windows.Forms.ToolStripMenuItem MnuHelp;
     }
 }
 

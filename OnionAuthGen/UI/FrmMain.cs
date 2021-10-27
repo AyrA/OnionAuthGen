@@ -72,11 +72,7 @@ namespace OnionAuthGen
                 "Continue and lose the unsaved key?", "Overwrite key", MessageBoxButtons.YesNo) == DialogResult.Yes;
         }
 
-        #endregion
-
-        #region Generic Form Events
-
-        private void FrmMain_HelpRequested(object sender, HelpEventArgs hlpevent)
+        private void OpenHelp(string HelpFile=null)
         {
             var HelpPages = "MF_Keygen,MF_PrivateKeys,MF_PublicKeys".Split(',');
             var f = Application.OpenForms.OfType<FrmHelp>().FirstOrDefault();
@@ -86,8 +82,24 @@ namespace OnionAuthGen
             }
             f.Show();
             f.BringToFront();
-            var Current = Tabs.TabPages.IndexOf(Tabs.SelectedTab);
-            f.SetHelpArticle(HelpPages[Math.Max(0, Current)]);
+            if (HelpFile == null)
+            {
+                var Current = Tabs.TabPages.IndexOf(Tabs.SelectedTab);
+                f.SetHelpArticle(HelpPages[Math.Max(0, Current)]);
+            }
+            else
+            {
+                f.SetHelpArticle(HelpFile);
+            }
+        }
+
+        #endregion
+
+        #region Generic Form Events
+
+        private void FrmMain_HelpRequested(object sender, HelpEventArgs hlpevent)
+        {
+            OpenHelp();
         }
 
         private void MnuExit_Click(object sender, EventArgs e)
@@ -118,6 +130,11 @@ namespace OnionAuthGen
                         break;
                 }
             }
+        }
+
+        private void MnuHelp_Click(object sender, EventArgs e)
+        {
+            OpenHelp();
         }
 
         #endregion
