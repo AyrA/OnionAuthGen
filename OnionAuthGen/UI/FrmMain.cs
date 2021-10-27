@@ -1022,7 +1022,24 @@ namespace OnionAuthGen
 
         private void CmsPublicDelete_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            var Row = GetSelectedPublicRow();
+            if (!ShowPublicRowSelectInfoDialog(Row))
+            {
+                return;
+            }
+            if (Warn("Really delete the given public key? This key loses access to your .onion service on the next Tor restart.", "Delete public key", MessageBoxButtons.YesNo) == DialogResult.No)
+            {
+                return;
+            }
+            try
+            {
+                File.Delete(Row);
+                ReloadPublicKeys();
+            }
+            catch (Exception ex)
+            {
+                Err($"Cannot delete the selected key. {ex.Message}", "Key delete failed");
+            }
         }
 
         #endregion
