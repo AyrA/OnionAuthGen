@@ -90,6 +90,52 @@ namespace OnionAuthGen
             };
         }
 
+        public static OnionDetails DeriveAuthentication(string Key, int KeyId, string OnionName, bool SpendExtraTime = true)
+        {
+            return DeriveAuthentication(Key, KeyId, OnionName, AuthenticationType.descriptor, KeyType.x25519, SpendExtraTime);
+        }
+
+        public static OnionDetails DeriveAuthentication(string Key, int KeyId, string OnionName, AuthenticationType AuthType, KeyType Algorithm, bool SpendExtraTime = true)
+        {
+            if (Key == null)
+            {
+                throw new ArgumentNullException(nameof(Key));
+            }
+
+            if (OnionName == null)
+            {
+                throw new ArgumentNullException(nameof(OnionName));
+            }
+
+            if (OnionName.ToLower().EndsWith(".onion"))
+            {
+                OnionName = OnionName.Substring(0, OnionName.Length - 6);
+            }
+            if (OnionName.Length != 56 || !Base32.IsBase32(OnionName))
+            {
+                throw new FormatException("Parameter must be v3 onion name with or without \".onion\"");
+            }
+
+            ValidateEnum(AuthType, nameof(AuthType));
+            ValidateEnum(Algorithm, nameof(Algorithm));
+
+            var CombinedKey = $"{Key}|{KeyId}";
+
+            var KeyBytes = KeyDerivation.DeriveKey(CombinedKey, KeyDerivation.GetCustomSalt(CombinedKey), (int)(SpendExtraTime ? 1e6 : 1e5), 32);
+            //Fix key for X25519 curve
+            KeyBytes[0] &= 248;
+            KeyBytes[31] &= 127;
+            KeyBytes[31] |= 64;
+            var Pair = X25519KeyAgreement.GenerateKeyFromPrivateKey(KeyBytes);
+            return new OnionDetails()
+            {
+                RawKeys = Pair,
+                Client = GenerateClientLine(OnionName, Pair.PrivateKey, AuthType, Algorithm),
+                Server = GenerateServerLine(Pair.PublicKey, AuthType, Algorithm)
+            };
+
+        }
+
         /// <summary>
         /// Generates the server side line for a public key
         /// </summary>

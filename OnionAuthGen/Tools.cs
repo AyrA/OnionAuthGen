@@ -8,10 +8,36 @@ namespace OnionAuthGen
 {
     public static class Tools
     {
-        private const string RES_START= "OnionAuthGen.Resources.";
+        private const string RES_START = "OnionAuthGen.Resources.";
+
+        public static readonly string[] WordList;
+
+        static Tools()
+        {
+            WordList = GetResourceText("Wordlist.txt")
+                .Split(new string[] { "\r\n" }, StringSplitOptions.None);
+        }
+
         public static Stream GetResource(string Filename)
         {
-            return Assembly.GetExecutingAssembly().GetManifestResourceStream($"{RES_START}{Filename}");
+            var Asm = Assembly.GetExecutingAssembly();
+            var S = Asm.GetManifestResourceStream($"{RES_START}{Filename}");
+            if (S == null)
+            {
+                S = Asm.GetManifestResourceStream($"{RES_START}{Filename}.gz");
+                if (S == null)
+                {
+                    return null;
+                }
+                using (var Decompressor = new System.IO.Compression.GZipStream(S, System.IO.Compression.CompressionMode.Decompress))
+                {
+                    var MS = new MemoryStream();
+                    Decompressor.CopyTo(MS);
+                    MS.Position = 0;
+                    return MS;
+                }
+            }
+            return S;
         }
 
         public static string GetResourceText(string Filename)

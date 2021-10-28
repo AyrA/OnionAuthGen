@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base32.cs" />
+    <Compile Include="KeyDerivation.cs" />
     <Compile Include="UI\FrmHelp.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +96,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Resources\Wordlist.txt.gz" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
