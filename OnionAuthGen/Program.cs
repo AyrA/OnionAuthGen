@@ -11,8 +11,6 @@ namespace OnionAuthGen
         [STAThread]
         static void Main()
         {
-            var c = Tools.GetResourceText("Wordlist.txt").Split(new string[] { "\r\n" }, StringSplitOptions.None);
-            Console.WriteLine(c);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new FrmMain());

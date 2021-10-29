@@ -66,6 +66,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools.cs" />
+    <Compile Include="UnmanagedPBKDF2.cs" />
     <Compile Include="X25519\Internal.cs" />
     <Compile Include="X25519\X25519.cs" />
     <EmbeddedResource Include="Resources\Help\MF_PrivateKeys.txt" />

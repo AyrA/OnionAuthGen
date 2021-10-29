@@ -90,11 +90,32 @@ namespace OnionAuthGen
             };
         }
 
+        /// <summary>
+        /// Derive a key pair from user supplied input
+        /// using default onion algorithm and authentication arguments.
+        /// </summary>
+        /// <param name="Key">Password or passphrase</param>
+        /// <param name="KeyId">key id</param>
+        /// <param name="OnionName">onion domain name</param>
+        /// <param name="SpendExtraTime">Make key harder to brute force</param>
+        /// <returns>Key</returns>
+        /// <remarks>The output of this function is constant for identical input arguments.</remarks>
         public static OnionDetails DeriveAuthentication(string Key, int KeyId, string OnionName, bool SpendExtraTime = true)
         {
             return DeriveAuthentication(Key, KeyId, OnionName, AuthenticationType.descriptor, KeyType.x25519, SpendExtraTime);
         }
 
+        /// <summary>
+        /// Derive a key pair from user supplied input.
+        /// </summary>
+        /// <param name="Key">Password or passphrase</param>
+        /// <param name="KeyId">key id</param>
+        /// <param name="OnionName">onion domain name</param>
+        /// <param name="AuthType">onion key authentication type</param>
+        /// <param name="Algorithm">onion key algorithm type</param>
+        /// <param name="SpendExtraTime">Make key harder to brute force</param>
+        /// <returns>Key</returns>
+        /// <remarks>The output of this function is constant for identical input arguments.</remarks>
         public static OnionDetails DeriveAuthentication(string Key, int KeyId, string OnionName, AuthenticationType AuthType, KeyType Algorithm, bool SpendExtraTime = true)
         {
             if (Key == null)
@@ -122,18 +143,21 @@ namespace OnionAuthGen
             var CombinedKey = $"{Key}|{KeyId}";
 
             var KeyBytes = KeyDerivation.DeriveKey(CombinedKey, KeyDerivation.GetCustomSalt(CombinedKey), (int)(SpendExtraTime ? 1e6 : 1e5), 32);
-            //Fix key for X25519 curve
-            KeyBytes[0] &= 248;
-            KeyBytes[31] &= 127;
-            KeyBytes[31] |= 64;
+            
+            //Fix key for X25519 curve. Some bits in the curve are constant zero or one.
+            //We need to do this manually because X25519KeyAgreement.GenerateKeyFromPrivateKey
+            //will not do it for us.
+            KeyBytes[0] &= 0xF8; //Rightmost 3 bits always zero
+            KeyBytes[31] &= 0x7F; //Leftmost bit always zero
+            KeyBytes[31] |= 0x40; //Bit next to leftmost always one.
             var Pair = X25519KeyAgreement.GenerateKeyFromPrivateKey(KeyBytes);
+            
             return new OnionDetails()
             {
                 RawKeys = Pair,
                 Client = GenerateClientLine(OnionName, Pair.PrivateKey, AuthType, Algorithm),
                 Server = GenerateServerLine(Pair.PublicKey, AuthType, Algorithm)
             };
-
         }
 
         /// <summary>
