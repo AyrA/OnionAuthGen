@@ -45,6 +45,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base32.cs" />
+    <Compile Include="UI\FrmKeygen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\FrmKeygen.Designer.cs">
+      <DependentUpon>FrmKeygen.cs</DependentUpon>
+    </Compile>
     <Compile Include="KeyDerivation.cs" />
     <Compile Include="UI\FrmHelp.cs">
       <SubType>Form</SubType>
@@ -77,6 +83,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="UI\FrmInput.resx">
       <DependentUpon>FrmInput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\FrmKeygen.resx">
+      <DependentUpon>FrmKeygen.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="UI\FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
