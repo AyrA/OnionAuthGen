@@ -1,0 +1,6 @@
+The number allows you to generate multiple keys with the same passphrase.
+
+You do not need to use the numbers in any particular order.
+The range is from 1 to 2147483647.
+
+In general we recommend you leave this field as-is and use different passphrases to get multiple keys.

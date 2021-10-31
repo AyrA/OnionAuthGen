@@ -128,5 +128,8 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\Help\MF_PublicKeys.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\KeyNumberInfo.txt" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

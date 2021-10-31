@@ -72,7 +72,7 @@ namespace OnionAuthGen
                 "Continue and lose the unsaved key?", "Overwrite key", MessageBoxButtons.YesNo) == DialogResult.Yes;
         }
 
-        private void OpenHelp(string HelpFile=null)
+        private void OpenHelp(string HelpFile = null)
         {
             var HelpPages = "MF_Keygen,MF_PrivateKeys,MF_PublicKeys".Split(',');
             var f = Application.OpenForms.OfType<FrmHelp>().FirstOrDefault();
@@ -154,6 +154,16 @@ namespace OnionAuthGen
         {
             if (!unsavedChanges || CurrentKey == null || AskKeyOverwrite())
             {
+                using (var KeygenForm = new FrmKeygen())
+                {
+                    if (KeygenForm.ShowDialog() == DialogResult.OK)
+                    {
+                        CurrentKey = KeygenForm.Key;
+                        unsavedChanges = true;
+                        SetKeyValues();
+                    }
+                }
+                /*
                 using (var OnionForm = new FrmInput("Enter .onion domain", "Enter the .onion domain this key is for (with or without .onion)", null, true, OnionGenerator.GetValidationExpression()))
                 {
                     if (OnionForm.ShowDialog() == DialogResult.OK)
@@ -163,6 +173,7 @@ namespace OnionAuthGen
                         SetKeyValues();
                     }
                 }
+                */
             }
         }
 
