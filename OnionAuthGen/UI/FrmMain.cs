@@ -148,6 +148,7 @@ namespace OnionAuthGen
         {
             TbClientLine.Text = CurrentKey.Client;
             TbServerLine.Text = CurrentKey.Server;
+            Tabs.SelectedIndex = 0;
         }
 
         private void GenerateKey()

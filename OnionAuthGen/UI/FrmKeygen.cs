@@ -87,7 +87,7 @@ namespace OnionAuthGen
 
         private bool GenerateDesignerKey()
         {
-            MessageBox.Show("This feature is not available yet", "N/A", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            MessageBox.Show("User designed keys are not available yet", "N/A", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             return false;
         }
 
