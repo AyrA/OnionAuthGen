@@ -213,6 +213,7 @@ namespace OnionAuthGen
                 }
                 TbClientConfigLine.Text = GetClientConfigLine(Path.GetFullPath(SFD.FileName));
                 unsavedChanges = false;
+                ReloadPrivateKeys();
                 return true;
             }
             return false;
@@ -298,6 +299,11 @@ namespace OnionAuthGen
             {
                 Err("Please generate or import a key first", "No key");
                 return false;
+            }
+            if (unsavedChanges)
+            {
+                Warn("CAUTION! You're exporting the public key of a key pair you have not yet saved.\r\n" +
+                    "The exported key will be useless if you don't save the private key too.", "Unsaved private key");
             }
             FBD.Description = $"Select '{OnionGenerator.SERVER_DIR}' directory";
             if (FBD.ShowDialog() == DialogResult.OK)
