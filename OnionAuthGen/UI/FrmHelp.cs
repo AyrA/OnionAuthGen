@@ -37,10 +37,12 @@ namespace OnionAuthGen
         public FrmHelp()
         {
             InitializeComponent();
-            foreach (var s in Tools.GetResourceNames().Where(m => m.StartsWith("Help.") && m.EndsWith(".txt")))
-            {
-                LbHelp.Items.Add(new HelpFile(s.Substring(5, s.Length - 9)));
-            }
+            var HelpFiles = Tools.GetResourceNames()
+                .Where(m => m.StartsWith("Help.") && m.EndsWith(".txt"))
+                .Select(m => new HelpFile(m.Substring(5, m.Length - 9)))
+                .OrderBy(m => m.Title)
+                .ToArray();
+            LbHelp.Items.AddRange(HelpFiles);
             Tools.ScaleForm(this);
         }
 
