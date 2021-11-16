@@ -18,6 +18,25 @@ namespace OnionAuthGen
                 .Split(new string[] { "\r\n" }, StringSplitOptions.None);
         }
 
+        public static void RegisterFormHelp(Form frm)
+        {
+            frm.HelpRequested += ProcessHelpRequest;
+        }
+
+        private static void ProcessHelpRequest(object sender, HelpEventArgs hlpevent)
+        {
+            var Source = sender as Form;
+            var f = Application.OpenForms.OfType<FrmHelp>().FirstOrDefault();
+            if (f == null)
+            {
+                f = new FrmHelp();
+            }
+            f.Show();
+            f.BringToFront();
+            f.SetHelpArticle(Source.Name);
+            hlpevent.Handled = true;
+        }
+
         public static Stream GetResource(string Filename)
         {
             var Asm = Assembly.GetExecutingAssembly();

@@ -27,7 +27,11 @@ namespace OnionAuthGen
                 { RbDesign, new Control[0] }
             };
             Tools.ScaleForm(this);
+            Tools.RegisterFormHelp(this);
             HandleRadioChange();
+#if DEBUG
+            TbOnion.Text = "DEBUG" + string.Empty.PadRight(51, 'A') + ".onion";
+#endif
         }
 
         private void HandleRadioChange()
@@ -87,7 +91,14 @@ namespace OnionAuthGen
 
         private bool GenerateDesignerKey()
         {
-            MessageBox.Show("User designed keys are not available yet", "N/A", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            using (var Designer = new FrmKeydesign())
+            {
+                if (Designer.ShowDialog() == DialogResult.OK)
+                {
+                    Key = OnionGenerator.ImportKey(TbOnion.Text, Designer.Key);
+                    return true;
+                }
+            }
             return false;
         }
 

@@ -46,13 +46,22 @@ namespace OnionAuthGen
 
         public void SetHelpArticle(string Name)
         {
+            var Set = false;
             for(var i = 0; i < LbHelp.Items.Count; i++)
             {
                 var H = (HelpFile)LbHelp.Items[i];
                 if (H.ResourceName == Name)
                 {
                     LbHelp.SelectedIndex = i;
+                    Set = true;
                 }
+            }
+            if (!Set)
+            {
+#if DEBUG
+                MessageBox.Show($"Help file not found: {Name}", "DEBUG error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+#endif
+                System.Diagnostics.Debug.Print($"Help file not found: {Name}");
             }
         }
 

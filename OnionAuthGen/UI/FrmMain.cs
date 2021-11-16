@@ -100,6 +100,7 @@ namespace OnionAuthGen
         private void FrmMain_HelpRequested(object sender, HelpEventArgs hlpevent)
         {
             OpenHelp();
+            hlpevent.Handled = true;
         }
 
         private void MnuExit_Click(object sender, EventArgs e)

@@ -91,6 +91,56 @@ namespace OnionAuthGen
         }
 
         /// <summary>
+        /// Imports a base32 formatted private key
+        /// </summary>
+        /// <param name="OnionName">onion domain name</param>
+        /// <param name="KeyBase32">Private key</param>
+        /// <returns>Key pair</returns>
+        public static OnionDetails ImportKey(string OnionName, string KeyBase32)
+        {
+            return ImportKey(OnionName, KeyBase32, AuthenticationType.descriptor, KeyType.x25519);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="OnionName">onion domain name</param>
+        /// <param name="KeyBase32">Private key</param>
+        /// <param name="AuthType">onion key authentication type</param>
+        /// <param name="Algorithm">onion key algorithm type</param>
+        /// <returns>Key pair</returns>
+        public static OnionDetails ImportKey(string OnionName, string KeyBase32, AuthenticationType AuthType, KeyType Algorithm)
+        {
+            if (!IsOnionName(OnionName))
+            {
+                throw new FormatException(nameof(OnionName) + " must be a valid .onion name");
+            }
+
+            if (!Base32.IsBase32(KeyBase32))
+            {
+                throw new FormatException(nameof(KeyBase32) + " must be Base32 encoded");
+            }
+            ValidateEnum(AuthType, nameof(AuthType));
+            ValidateEnum(Algorithm, nameof(Algorithm));
+
+            var Decoded = Base32.Decode(KeyBase32);
+
+            if (!IsValidPrivateKey(Decoded))
+            {
+                throw new FormatException(nameof(KeyBase32) + " is not a valid X25519 private key");
+            }
+
+            X25519KeyPair Keys = X25519KeyAgreement.GenerateKeyFromPrivateKey(Decoded);
+
+            return new OnionDetails()
+            {
+                RawKeys = Keys,
+                Server = GenerateServerLine(Keys.PublicKey, AuthType, Algorithm),
+                Client = GenerateClientLine(OnionName, Keys.PrivateKey, AuthType, Algorithm)
+            };
+        }
+
+        /// <summary>
         /// Derive a key pair from user supplied input
         /// using default onion algorithm and authentication arguments.
         /// </summary>
@@ -143,7 +193,7 @@ namespace OnionAuthGen
             var CombinedKey = $"{Key}|{KeyId}";
 
             var KeyBytes = KeyDerivation.DeriveKey(CombinedKey, KeyDerivation.GetCustomSalt(CombinedKey), (int)(SpendExtraTime ? 1e6 : 1e5), 32);
-            
+
             //Fix key for X25519 curve. Some bits in the curve are constant zero or one.
             //We need to do this manually because X25519KeyAgreement.GenerateKeyFromPrivateKey
             //will not do it for us.
@@ -151,7 +201,7 @@ namespace OnionAuthGen
             KeyBytes[31] &= 0x7F; //Leftmost bit always zero
             KeyBytes[31] |= 0x40; //Bit next to leftmost always one.
             var Pair = X25519KeyAgreement.GenerateKeyFromPrivateKey(KeyBytes);
-            
+
             return new OnionDetails()
             {
                 RawKeys = Pair,
@@ -312,6 +362,58 @@ namespace OnionAuthGen
             {
                 throw new ArgumentException($"'{ParamName}' is not a valid enum. Must be one of: " + string.Join(", ", Enum.GetNames(EnumValue.GetType())));
             }
+        }
+
+        /// <summary>
+        /// Checks if the given key is a valid X25519 private key
+        /// </summary>
+        /// <param name="PrivateKey">Private key</param>
+        /// <returns>true, if valid</returns>
+        private static bool IsValidPrivateKey(byte[] PrivateKey)
+        {
+            try
+            {
+                var K2 = FixPrivateKey(PrivateKey);
+                for (var i = 0; i < PrivateKey.Length; i++)
+                {
+                    if (PrivateKey[i] != K2[i])
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Converts a key into a valid X25519 key
+        /// </summary>
+        /// <param name="PrivateKey">Private key</param>
+        /// <returns>Fixed private key</returns>
+        private static byte[] FixPrivateKey(byte[] PrivateKey)
+        {
+            if (PrivateKey == null)
+            {
+                throw new ArgumentNullException(nameof(PrivateKey));
+            }
+            if (PrivateKey.Length != 32)
+            {
+                throw new ArgumentException("Private key must be exactly 32 bytes");
+            }
+
+            PrivateKey = (byte[])PrivateKey.Clone();
+
+            //Fix key for X25519 curve. Some bits in the curve are constant zero or one.
+            //We need to do this manually because X25519KeyAgreement.GenerateKeyFromPrivateKey
+            //will not do it for us.
+            PrivateKey[0] &= 0xF8;  //Rightmost 3 bits always zero
+            PrivateKey[31] &= 0x7F; //Leftmost bit always zero
+            PrivateKey[31] |= 0x40; //Bit next to leftmost always one.
+            return PrivateKey;
         }
     }
 
