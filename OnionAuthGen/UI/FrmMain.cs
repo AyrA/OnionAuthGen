@@ -162,20 +162,36 @@ namespace OnionAuthGen
                     {
                         CurrentKey = KeygenForm.Key;
                         unsavedChanges = true;
+                        if (KeygenForm.AutoSave)
+                        {
+                            var FileName = DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss")
+                                + OnionGenerator.CLIENT_FILE_EXT;
+                            if (Directory.Exists(TbPrivateDirectory.Text))
+                            {
+                                var FullName = Path.Combine(TbPrivateDirectory.Text, FileName);
+                                try
+                                {
+                                    if (File.Exists(FullName))
+                                    {
+                                        throw new Exception("File name conflict");
+                                    }
+                                    File.WriteAllText(FullName, CurrentKey.Client);
+                                    unsavedChanges = false;
+                                    ReloadPrivateKeys();
+                                    Tabs.SelectedIndex = 1;
+                                    //Do not display key details if saving the key was successful
+                                    return;
+                                }
+                                catch(Exception ex)
+                                {
+                                    Err("Unable to save your key at this time. Please save manually\r\n" +
+                                        $"Error: {ex}", "Key save failed");
+                                }
+                            }
+                        }
                         SetKeyValues();
                     }
                 }
-                /*
-                using (var OnionForm = new FrmInput("Enter .onion domain", "Enter the .onion domain this key is for (with or without .onion)", null, true, OnionGenerator.GetValidationExpression()))
-                {
-                    if (OnionForm.ShowDialog() == DialogResult.OK)
-                    {
-                        CurrentKey = OnionGenerator.GenerateAuthentication(OnionForm.Value);
-                        unsavedChanges = true;
-                        SetKeyValues();
-                    }
-                }
-                */
             }
         }
 
@@ -341,11 +357,6 @@ namespace OnionAuthGen
                 }
             }
             return false;
-        }
-
-        private void BtnGenerate_Click(object sender, EventArgs e)
-        {
-            GenerateKey();
         }
 
         private void BtnSaveServer_Click(object sender, EventArgs e)

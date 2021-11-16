@@ -45,6 +45,7 @@ namespace OnionAuthGen
             this.CbHarderKey = new System.Windows.Forms.CheckBox();
             this.BtnNumberHelp = new System.Windows.Forms.Button();
             this.LblFieldNote = new System.Windows.Forms.Label();
+            this.cbAutoSave = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.NudKeyNumber)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,7 +56,7 @@ namespace OnionAuthGen
             this.RbRandom.Location = new System.Drawing.Point(12, 79);
             this.RbRandom.Name = "RbRandom";
             this.RbRandom.Size = new System.Drawing.Size(85, 17);
-            this.RbRandom.TabIndex = 2;
+            this.RbRandom.TabIndex = 3;
             this.RbRandom.TabStop = true;
             this.RbRandom.Text = "&Random key";
             this.RbRandom.UseVisualStyleBackColor = true;
@@ -67,7 +68,7 @@ namespace OnionAuthGen
             this.RbPassword.Location = new System.Drawing.Point(12, 127);
             this.RbPassword.Name = "RbPassword";
             this.RbPassword.Size = new System.Drawing.Size(105, 17);
-            this.RbPassword.TabIndex = 4;
+            this.RbPassword.TabIndex = 5;
             this.RbPassword.Text = "&Deterministic key";
             this.RbPassword.UseVisualStyleBackColor = true;
             this.RbPassword.CheckedChanged += new System.EventHandler(this.RbPassword_CheckedChanged);
@@ -78,7 +79,7 @@ namespace OnionAuthGen
             this.RbDesign.Location = new System.Drawing.Point(12, 288);
             this.RbDesign.Name = "RbDesign";
             this.RbDesign.Size = new System.Drawing.Size(113, 17);
-            this.RbDesign.TabIndex = 13;
+            this.RbDesign.TabIndex = 14;
             this.RbDesign.Text = "&User designed key";
             this.RbDesign.UseVisualStyleBackColor = true;
             this.RbDesign.CheckedChanged += new System.EventHandler(this.RbDesign_CheckedChanged);
@@ -88,9 +89,9 @@ namespace OnionAuthGen
             this.TbOnion.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.TbOnion.CharacterCasing = System.Windows.Forms.CharacterCasing.Lower;
-            this.TbOnion.Location = new System.Drawing.Point(12, 37);
+            this.TbOnion.Location = new System.Drawing.Point(93, 12);
             this.TbOnion.Name = "TbOnion";
-            this.TbOnion.Size = new System.Drawing.Size(468, 20);
+            this.TbOnion.Size = new System.Drawing.Size(387, 20);
             this.TbOnion.TabIndex = 1;
             // 
             // label1
@@ -98,9 +99,9 @@ namespace OnionAuthGen
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 13);
+            this.label1.Size = new System.Drawing.Size(78, 13);
             this.label1.TabIndex = 0;
-            this.label1.Text = ".onion Domain";
+            this.label1.Text = ".onion Domain:";
             // 
             // LblRandomOpt
             // 
@@ -108,7 +109,7 @@ namespace OnionAuthGen
             this.LblRandomOpt.Location = new System.Drawing.Point(9, 105);
             this.LblRandomOpt.Name = "LblRandomOpt";
             this.LblRandomOpt.Size = new System.Drawing.Size(237, 13);
-            this.LblRandomOpt.TabIndex = 3;
+            this.LblRandomOpt.TabIndex = 4;
             this.LblRandomOpt.Text = "There are no configurable options for this setting.";
             // 
             // TbKey
@@ -118,7 +119,7 @@ namespace OnionAuthGen
             this.TbKey.Location = new System.Drawing.Point(12, 175);
             this.TbKey.Name = "TbKey";
             this.TbKey.Size = new System.Drawing.Size(468, 20);
-            this.TbKey.TabIndex = 6;
+            this.TbKey.TabIndex = 7;
             // 
             // LblEnterPassword
             // 
@@ -126,7 +127,7 @@ namespace OnionAuthGen
             this.LblEnterPassword.Location = new System.Drawing.Point(12, 153);
             this.LblEnterPassword.Name = "LblEnterPassword";
             this.LblEnterPassword.Size = new System.Drawing.Size(167, 13);
-            this.LblEnterPassword.TabIndex = 5;
+            this.LblEnterPassword.TabIndex = 6;
             this.LblEnterPassword.Text = "Enter the password or passphrase";
             // 
             // LlRandomKey
@@ -135,7 +136,7 @@ namespace OnionAuthGen
             this.LlRandomKey.Location = new System.Drawing.Point(12, 204);
             this.LlRandomKey.Name = "LlRandomKey";
             this.LlRandomKey.Size = new System.Drawing.Size(141, 13);
-            this.LlRandomKey.TabIndex = 7;
+            this.LlRandomKey.TabIndex = 8;
             this.LlRandomKey.TabStop = true;
             this.LlRandomKey.Text = "Use 6 random words instead";
             this.LlRandomKey.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LlRandomKey_LinkClicked);
@@ -147,7 +148,7 @@ namespace OnionAuthGen
             this.LblKeyNumber.Location = new System.Drawing.Point(12, 229);
             this.LblKeyNumber.Name = "LblKeyNumber";
             this.LblKeyNumber.Size = new System.Drawing.Size(65, 13);
-            this.LblKeyNumber.TabIndex = 8;
+            this.LblKeyNumber.TabIndex = 9;
             this.LblKeyNumber.Text = "Key Number";
             // 
             // NudKeyNumber
@@ -165,7 +166,7 @@ namespace OnionAuthGen
             0});
             this.NudKeyNumber.Name = "NudKeyNumber";
             this.NudKeyNumber.Size = new System.Drawing.Size(96, 20);
-            this.NudKeyNumber.TabIndex = 9;
+            this.NudKeyNumber.TabIndex = 10;
             this.NudKeyNumber.Value = new decimal(new int[] {
             1,
             0,
@@ -178,7 +179,7 @@ namespace OnionAuthGen
             this.BtnOK.Location = new System.Drawing.Point(324, 288);
             this.BtnOK.Name = "BtnOK";
             this.BtnOK.Size = new System.Drawing.Size(75, 23);
-            this.BtnOK.TabIndex = 14;
+            this.BtnOK.TabIndex = 15;
             this.BtnOK.Text = "&OK";
             this.BtnOK.UseVisualStyleBackColor = true;
             this.BtnOK.Click += new System.EventHandler(this.BtnOK_Click);
@@ -190,7 +191,7 @@ namespace OnionAuthGen
             this.BtnCancel.Location = new System.Drawing.Point(405, 288);
             this.BtnCancel.Name = "BtnCancel";
             this.BtnCancel.Size = new System.Drawing.Size(75, 23);
-            this.BtnCancel.TabIndex = 15;
+            this.BtnCancel.TabIndex = 16;
             this.BtnCancel.Text = "&Cancel";
             this.BtnCancel.UseVisualStyleBackColor = true;
             // 
@@ -202,7 +203,7 @@ namespace OnionAuthGen
             this.CbHarderKey.Location = new System.Drawing.Point(238, 229);
             this.CbHarderKey.Name = "CbHarderKey";
             this.CbHarderKey.Size = new System.Drawing.Size(242, 17);
-            this.CbHarderKey.TabIndex = 11;
+            this.CbHarderKey.TabIndex = 12;
             this.CbHarderKey.Text = "Spend extra time to make key harder to guess";
             this.CbHarderKey.UseVisualStyleBackColor = true;
             // 
@@ -211,7 +212,7 @@ namespace OnionAuthGen
             this.BtnNumberHelp.Location = new System.Drawing.Point(185, 225);
             this.BtnNumberHelp.Name = "BtnNumberHelp";
             this.BtnNumberHelp.Size = new System.Drawing.Size(47, 23);
-            this.BtnNumberHelp.TabIndex = 10;
+            this.BtnNumberHelp.TabIndex = 11;
             this.BtnNumberHelp.Text = "?";
             this.BtnNumberHelp.UseVisualStyleBackColor = true;
             this.BtnNumberHelp.Click += new System.EventHandler(this.BtnNumberHelp_Click);
@@ -223,8 +224,20 @@ namespace OnionAuthGen
             this.LblFieldNote.Location = new System.Drawing.Point(12, 256);
             this.LblFieldNote.Name = "LblFieldNote";
             this.LblFieldNote.Size = new System.Drawing.Size(332, 13);
-            this.LblFieldNote.TabIndex = 12;
+            this.LblFieldNote.TabIndex = 13;
             this.LblFieldNote.Text = "Note: All fields need to be identical for the same key to be generated.";
+            // 
+            // cbAutoSave
+            // 
+            this.cbAutoSave.AutoSize = true;
+            this.cbAutoSave.Checked = true;
+            this.cbAutoSave.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cbAutoSave.Location = new System.Drawing.Point(93, 44);
+            this.cbAutoSave.Name = "cbAutoSave";
+            this.cbAutoSave.Size = new System.Drawing.Size(186, 17);
+            this.cbAutoSave.TabIndex = 2;
+            this.cbAutoSave.Text = "Save generated key automatically";
+            this.cbAutoSave.UseVisualStyleBackColor = true;
             // 
             // FrmKeygen
             // 
@@ -233,6 +246,7 @@ namespace OnionAuthGen
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.BtnCancel;
             this.ClientSize = new System.Drawing.Size(492, 323);
+            this.Controls.Add(this.cbAutoSave);
             this.Controls.Add(this.LblFieldNote);
             this.Controls.Add(this.BtnNumberHelp);
             this.Controls.Add(this.CbHarderKey);
@@ -278,5 +292,6 @@ namespace OnionAuthGen
         private System.Windows.Forms.CheckBox CbHarderKey;
         private System.Windows.Forms.Button BtnNumberHelp;
         private System.Windows.Forms.Label LblFieldNote;
+        private System.Windows.Forms.CheckBox cbAutoSave;
     }
 }

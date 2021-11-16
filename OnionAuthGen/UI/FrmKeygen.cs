@@ -15,6 +15,8 @@ namespace OnionAuthGen
         /// </remarks>
         public OnionDetails Key { get; private set; }
 
+        public bool AutoSave { get; private set; }
+
         private readonly Dictionary<RadioButton, Control[]> SwitchedControls;
 
         public FrmKeygen()
@@ -125,6 +127,7 @@ namespace OnionAuthGen
                 }
                 if (Result)
                 {
+                    AutoSave = cbAutoSave.Checked;
                     DialogResult = DialogResult.OK;
                 }
             }
