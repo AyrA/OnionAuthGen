@@ -1,0 +1,22 @@
+Key generator form
+
+This window allows you to generate keys.
+Multiple types are offered:
+
+1. Random key:
+
+This is the preferred way if you trust this computer and have a safe way of storing the key.
+A cryptographically safe random number generator is used.
+
+2. Deterministic key
+
+This derives a key from a passphrase you provide.
+An option to use 6 randomly chosen words from an english word list is provided below the text box.
+The key number field allows you to generate different keys with the same passphrase.
+Note that it's generally recommended to use different passphrases to get different keys.
+
+Note that all three values (passphrase, key number, difficulty checkbox) must be identical to generate the same key again later.
+
+3. User designed key
+
+This is mostly intended as a fun toy and you should prefer deterministic keys rather than designed keys.

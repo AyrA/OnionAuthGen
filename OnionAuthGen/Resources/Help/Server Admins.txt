@@ -1,4 +1,4 @@
-Server Admins
+Server Administrators
 
 As a server administrator, you can use this tool to generate keys for your users.
 Note that this is not an ideal process.

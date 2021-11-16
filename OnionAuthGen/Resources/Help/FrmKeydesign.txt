@@ -1,0 +1,10 @@
+Key designer form
+
+Here you can design your own private key.
+Note: Due to how asymmetric keys work you cannot desgin the public key.
+
+CAUTION!
+This is intended as a toy. You should not use this tool for real keys.
+
+There's five criteria which are shown above the text box.
+The list of criteria automatically updates as you type.
